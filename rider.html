@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lieferoo - 라이더 배달 상세</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="app-container rider-theme">
+    <header class="header rider-header">
+      <div class="logo">Lieferoo 라이더</div>
+      <div class="subtitle">신규 배달 요청</div>
+    </header>
+
+    <main class="step-view active">
+      <h1 class="page-title">배달 상세 정보</h1>
+      
+      <div id="rider-order-card" class="card rider-card">
+        <div class="badge">기본 주소 (한국어)</div>
+        <div class="rider-address-ko" id="rider-road-ko">-</div>
+        <div class="rider-address-detail" id="rider-detail-ko">-</div>
+        <div class="original-text" id="rider-detail-en">-</div>
+      </div>
+
+      <div class="card rider-request-card" id="request-container">
+        <div class="badge">라이더 요청사항</div>
+        <div class="rider-request-ko" id="rider-request-ko">-</div>
+        <div class="original-text" id="rider-request-en">-</div>
+        <div id="fallback-badge" class="warning-badge hidden">자동 번역 불가 (원문 전달됨)</div>
+      </div>
+
+      <button id="complete-delivery-btn" class="btn btn-primary full-width">배달 완료 처리</button>
+      <a href="index.html" class="btn btn-secondary full-width text-center margin-top-12">유저 주문 화면으로 돌아가기</a>
+    </main>
+  </div>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const rawData = localStorage.getItem('lieferoo_order');
+      if (!rawData) {
+        document.getElementById('rider-road-ko').textContent = '주문 내역이 없습니다.';
+        return;
+      }
+      const order = JSON.parse(rawData);
+      document.getElementById('rider-road-ko').textContent = order.road_address_ko || '';
+      document.getElementById('rider-detail-ko').textContent = (order.building_name_ko || '') + ' ' + (order.unit || '');
+      document.getElementById('rider-detail-en').textContent = 'Original: ' + (order.building_name_en || '') + ' ' + (order.unit || '');
+      
+      const reqKoEl = document.getElementById('rider-request-ko');
+      const reqEnEl = document.getElementById('rider-request-en');
+      const fallbackEl = document.getElementById('fallback-badge');
+      const reqContainer = document.getElementById('request-container');
+
+      if (order.rider_request_ko) {
+        reqKoEl.textContent = order.rider_request_ko;
+        reqEnEl.textContent = '원문: "' + order.rider_request_en + '"';
+        reqContainer.classList.add('highlight-blue');
+      } else {
+        reqKoEl.textContent = order.rider_request_en;
+        reqEnEl.textContent = '원문 입력값 그대로 표시됨';
+        fallbackEl.classList.remove('hidden');
+        reqContainer.classList.add('highlight-amber');
+      }
+
+      document.getElementById('complete-delivery-btn').addEventListener('click', () => {
+        alert('배달이 완료되었습니다.');
+      });
+    });
+  </script>
+</body>
+</html>

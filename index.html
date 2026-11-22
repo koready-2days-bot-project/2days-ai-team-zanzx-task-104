@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lieferoo - Address & Delivery</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="app-container">
+    <!-- Header -->
+    <header class="header">
+      <div class="logo">Lieferoo</div>
+      <div class="subtitle">English Delivery Service</div>
+    </header>
+
+    <!-- Step 1: Address Search -->
+    <section id="step-search" class="step-view active">
+      <h1 class="page-title">Where should we deliver?</h1>
+      <div class="input-group">
+        <input type="text" id="address-input" placeholder="Search street name or district (e.g. Donggyo-ro)">
+        <button id="search-btn" class="btn btn-primary">Search</button>
+      </div>
+      <div id="search-error" class="error-msg hidden">Please enter at least 2 characters.</div>
+      <div id="search-results" class="results-list"></div>
+      <div id="search-empty" class="empty-msg hidden">No matching address found. Try searching for 'Donggyo-ro' or 'Mapo-gu'.</div>
+    </section>
+
+    <!-- Step 2: Address Details -->
+    <section id="step-details" class="step-view hidden">
+      <h1 class="page-title">Enter detail address</h1>
+      <div class="card">
+        <div class="card-title" id="selected-address-en"></div>
+        <div class="card-sub" id="selected-address-ko"></div>
+      </div>
+      <div class="input-group vertical">
+        <label for="unit-input">Building / Room number (Required)</label>
+        <input type="text" id="unit-input" placeholder="e.g. Bldg 101 Rm 402">
+        <div id="unit-error" class="error-msg hidden">Please enter unit/room details.</div>
+      </div>
+      <button id="details-next-btn" class="btn btn-primary full-width">Continue to Checkout</button>
+    </section>
+
+    <!-- Step 3: Checkout & Requests -->
+    <section id="step-checkout" class="step-view hidden">
+      <h1 class="page-title">Checkout</h1>
+      <div class="card">
+        <h3>Delivery Address</h3>
+        <p id="checkout-address-summary"></p>
+      </div>
+      <div class="card">
+        <h3>Delivery Request for Rider</h3>
+        <div class="input-group vertical">
+          <select id="preset-request-select">
+            <option value="Leave at door and ring doorbell">Leave at door and ring doorbell</option>
+            <option value="Hand to me directly">Hand to me directly</option>
+            <option value="Leave with security guard">Leave with security guard</option>
+            <option value="custom">Other custom request...</option>
+          </select>
+          <input type="text" id="custom-request-input" class="hidden" placeholder="Type custom request in English">
+        </div>
+      </div>
+      <button id="place-order-btn" class="btn btn-primary full-width">Place Order</button>
+    </section>
+
+    <!-- Step 4: Order Confirmation -->
+    <section id="step-confirmation" class="step-view hidden">
+      <div class="success-icon">✓</div>
+      <h1 class="page-title">Order Placed!</h1>
+      <p>Your address and delivery request have been translated for the rider.</p>
+      <div class="card green-border">
+        <h3>Rider View Preview</h3>
+        <p>Switch view to test how the Korean rider screen receives this order.</p>
+      </div>
+      <a href="rider.html" class="btn btn-secondary full-width text-center">Open Rider View (Korean)</a>
+    </section>
+  </div>
+  <script src="app.js"></script>
+</body>
+</html>
